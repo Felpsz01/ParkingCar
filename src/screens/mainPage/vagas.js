@@ -1,7 +1,90 @@
-import { SafeAreaView, StatusBar } from "react-native";
-import styled from "styled-components";
+import { useState, useRef } from "react";
+import { StatusBar, TextInput, Animated, Dimensions } from "react-native";
+import styled from "styled-components/native";
+import { Ionicons } from "@expo/vector-icons";
 
-const VagaItemContainer = styled.View`
+const screenHeight = Dimensions.get("window").height;
+
+
+const ContainerApp = styled.SafeAreaView`
+  flex: 1;
+  background-color: #2d2d2d;
+  align-items: center;
+`;
+
+const ViewLogoImage = styled.View`
+  display: flex;
+  align-items: center;
+`;
+
+const LogoImage = styled.Image`
+  width: 200px;
+  height: 200px;
+`;
+
+const VagasTitle = styled.Text`
+  color: white;
+  font-size: 20px;
+  margin-top: -30px;
+  margin-bottom: 10px;
+  font-weight: bold;
+`;
+
+const VagasContainer = styled.ScrollView`
+  border: 2px solid #fff;
+  width: 80%;
+  height: 50%;
+  margin-bottom: 7%;
+  border-radius: 5px;
+`;
+
+const DrawerContent = styled.View`
+  background-color: #333;
+  padding: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  elevation: 10;
+`;
+
+const ModalTitle = styled.Text`
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+`;
+
+const StyledInput = styled(TextInput)`
+  background-color: #444;
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+`;
+
+const ModalButton = styled.TouchableOpacity`
+  background-color: #06d6a0;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 10px;
+  align-items: center;
+`;
+
+const ModalButtonCancel = styled.TouchableOpacity`
+  background-color: #ef476f;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 10px;
+  align-items: center;
+`;
+
+const ModalButtonText = styled.Text`
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+const VagaItemContainer = styled.TouchableOpacity`
   background-color: #1d1d1d;
   border-bottom-width: 1px;
   border-bottom-color: #fff;
@@ -16,52 +99,67 @@ const VagaItemText = styled.Text`
   font-size: 16px;
 `;
 
-function VagaItem({ nome }) {
+function VagaItem({ nome, onPress }) {
   return (
-    <VagaItemContainer>
+    <VagaItemContainer onPress={onPress}>
       <VagaItemText>{nome}</VagaItemText>
     </VagaItemContainer>
   );
 }
 
 export default function Vagas() {
-  const ContainerApp = styled.SafeAreaView`
-    flex: 1;
-    background-color: #2d2d2d;
-    align-items: center;
-  `;
+  const [vagas, setVagas] = useState([
+    { id: 1, nome: " 01", placa: "", modelo: "", cor: "" },
+    { id: 2, nome: " 02", placa: "", modelo: "", cor: "" },
+    { id: 3, nome: " 03", placa: "", modelo: "", cor: "" },
+    { id: 4, nome: " 04", placa: "", modelo: "", cor: "" },
+    { id: 5, nome: " 05", placa: "", modelo: "", cor: "" },
+    { id: 6, nome: " 06", placa: "", modelo: "", cor: "" },
+    { id: 7, nome: " 07", placa: "", modelo: "", cor: "" },
+    { id: 8, nome: " 08", placa: "", modelo: "", cor: "" },
+    { id: 9, nome: " 09", placa: "", modelo: "", cor: "" },
+    { id: 10, nome: " 10", placa: "", modelo: "", cor: "" },
+    { id: 11, nome: " 11", placa: "", modelo: "", cor: "" },
+  ]);
 
-  const ViewLogoImage = styled.View`
-    display: flex;
-    align-items: center;
-  `;
+  const [selectedVaga, setSelectedVaga] = useState(null);
+  const [placa, setPlaca] = useState("");
+  const [modelo, setModelo] = useState("");
+  const [cor, setCor] = useState("");
 
-  const LogoImage = styled.Image`
-    width: 200px;
-    height: 200px;
-  `;
+  const slideAnim = useRef(new Animated.Value(screenHeight)).current;
 
-  const VagasTitle = styled.Text`
-    color: white;
-    font-size: 20px;
-    margin-top: -30px;
-    margin-bottom: 10px;
-    font-weight: bold;
-  `;
+  const abrirGaveta = (vaga) => {
+    setSelectedVaga(vaga);
+    setPlaca(vaga.placa || "");
+    setModelo(vaga.modelo || "");
+    setCor(vaga.cor || "");
 
-  const VagasContainer = styled.View`
-    border: 2px solid #fff;
-    width: 90%;
-    height: 65%;
-    border-radius: 5px;
-    display: flex;
-  `;
+    Animated.timing(slideAnim, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
 
-  const vagas = [
-    { id: 1, nome: "Vaga 1" },
-    { id: 2, nome: "Vaga 2" },
-    { id: 3, nome: "Vaga 3" },
-  ];
+  const fecharGaveta = () => {
+    Animated.timing(slideAnim, {
+      toValue: screenHeight,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => setSelectedVaga(null));
+  };
+
+  const salvarDados = () => {
+    if (!selectedVaga) return;
+
+    const novasVagas = vagas.map((vaga) =>
+      vaga.id === selectedVaga.id ? { ...vaga, placa, modelo, cor } : vaga
+    );
+
+    setVagas(novasVagas);
+    fecharGaveta();
+  };
 
   return (
     <ContainerApp>
@@ -72,12 +170,66 @@ export default function Vagas() {
           resizeMode="contain"
         />
       </ViewLogoImage>
+
       <VagasTitle>Vagas</VagasTitle>
+
       <VagasContainer>
         {vagas.map((vaga) => (
-          <VagaItem key={vaga.id} nome={vaga.nome} />
+          <VagaItem
+            key={vaga.id}
+            nome={
+              vaga.placa
+                ? `${vaga.nome} - ${vaga.modelo} (${vaga.cor})`
+                : vaga.nome
+            }
+            onPress={() => abrirGaveta(vaga)}
+          />
         ))}
       </VagasContainer>
+
+      {selectedVaga && (
+        <Animated.View
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            transform: [{ translateY: slideAnim }],
+          }}
+        >
+          <DrawerContent>
+            <ModalTitle>Editar {selectedVaga.nome}</ModalTitle>
+
+            <StyledInput
+              placeholder="Placa"
+              placeholderTextColor="#aaa"
+              value={placa}
+              onChangeText={setPlaca}
+            />
+            <StyledInput
+              placeholder="Modelo"
+              placeholderTextColor="#aaa"
+              value={modelo}
+              onChangeText={setModelo}
+            />
+            <StyledInput
+              placeholder="Cor"
+              placeholderTextColor="#aaa"
+              value={cor}
+              onChangeText={setCor}
+            />
+
+            <ModalButton onPress={salvarDados}>
+              <ModalButtonText>Salvar</ModalButtonText>
+            </ModalButton>
+
+            <ModalButtonCancel onPress={fecharGaveta}>
+              <ModalButtonText>Cancelar</ModalButtonText>
+            </ModalButtonCancel>
+          </DrawerContent>
+        </Animated.View>
+      )}
     </ContainerApp>
   );
 }
+
