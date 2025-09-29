@@ -1,10 +1,15 @@
 import { useState, useRef } from "react";
-import { StatusBar, TextInput, Animated, Dimensions } from "react-native";
+import {
+  StatusBar,
+  TextInput,
+  Animated,
+  Dimensions,
+  Alert,
+} from "react-native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 
 const screenHeight = Dimensions.get("window").height;
-
 
 const ContainerApp = styled.SafeAreaView`
   flex: 1;
@@ -43,7 +48,6 @@ const DrawerContent = styled.View`
   padding: 20px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  elevation: 10;
 `;
 
 const ModalTitle = styled.Text`
@@ -120,6 +124,15 @@ export default function Vagas() {
     { id: 9, nome: " 09", placa: "", modelo: "", cor: "" },
     { id: 10, nome: " 10", placa: "", modelo: "", cor: "" },
     { id: 11, nome: " 11", placa: "", modelo: "", cor: "" },
+    { id: 12, nome: " 12", placa: "", modelo: "", cor: "" },
+    { id: 13, nome: " 13", placa: "", modelo: "", cor: "" },
+    { id: 14, nome: " 14", placa: "", modelo: "", cor: "" },
+    { id: 15, nome: " 15", placa: "", modelo: "", cor: "" },
+    { id: 16, nome: " 16", placa: "", modelo: "", cor: "" },
+    { id: 17, nome: " 17", placa: "", modelo: "", cor: "" },
+    { id: 18, nome: " 18", placa: "", modelo: "", cor: "" },
+    { id: 19, nome: " 19", placa: "", modelo: "", cor: "" },
+    { id: 20, nome: " 20", placa: "", modelo: "", cor: "" },
   ]);
 
   const [selectedVaga, setSelectedVaga] = useState(null);
@@ -159,6 +172,32 @@ export default function Vagas() {
 
     setVagas(novasVagas);
     fecharGaveta();
+  };
+
+  const removerVeiculo = () => {
+    if (!selectedVaga) return;
+
+    // Confirmação de remoção
+    Alert.alert(
+      "Remover Veículo",
+      "Tem certeza que deseja remover o veículo dessa vaga?",
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Remover",
+          onPress: () => {
+            const novasVagas = vagas.map((vaga) =>
+              vaga.id === selectedVaga.id
+                ? { ...vaga, placa: "", modelo: "", cor: "" }
+                : vaga
+            );
+
+            setVagas(novasVagas);
+            fecharGaveta();
+          },
+        },
+      ]
+    );
   };
 
   return (
@@ -226,10 +265,13 @@ export default function Vagas() {
             <ModalButtonCancel onPress={fecharGaveta}>
               <ModalButtonText>Cancelar</ModalButtonText>
             </ModalButtonCancel>
+
+            <ModalButtonCancel onPress={removerVeiculo}>
+              <ModalButtonText>Remover Veículo</ModalButtonText>
+            </ModalButtonCancel>
           </DrawerContent>
         </Animated.View>
       )}
     </ContainerApp>
   );
 }
-
