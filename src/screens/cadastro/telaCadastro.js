@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import { SafeAreaView, StatusBar } from "react-native";
 import { LoginContainer } from "../login/styles";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Cadastro() {
+  const navigation = useNavigation();
+
   const ContainerApp = styled.SafeAreaView`
     flex: 1;
     background-color: #2d2d2d;
@@ -58,14 +61,13 @@ export default function Cadastro() {
     width: 300px;
     margin-top: 5px;
     display: flex;
-    `;
+  `;
 
-const TextHaveAccount = styled.Text`
+  const TextHaveAccount = styled.Text`
     color: #94b9ffff;
     font-size: 12px;
     text-decoration: underline;
-    
-    `;
+  `;
 
   const BottomImageView = styled.View`
     display: flex;
@@ -105,10 +107,10 @@ const TextHaveAccount = styled.Text`
             placeholderTextColor="white"
             secureTextEntry={true}
           />
-          <EnterButton>
+          <EnterButton onPress={() => navigation.navigate("Log")}>
             <TextButton>Cadastrar</TextButton>
           </EnterButton>
-          <HaveAccount>
+          <HaveAccount onPress={() => navigation.navigate("Log")}>
             <TextHaveAccount>Já possui uma conta? Faça login</TextHaveAccount>
           </HaveAccount>
 

@@ -7,7 +7,6 @@ import {
   Alert,
 } from "react-native";
 import styled from "styled-components/native";
-import { Ionicons } from "@expo/vector-icons";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -90,7 +89,8 @@ const ModalButtonText = styled.Text`
 
 const VagaItemContainer = styled.TouchableOpacity`
   background-color: #1d1d1d;
-  border-bottom-width: 1px;
+  border-bottom-width: 2px;
+  border-top-width: 2px;
   border-bottom-color: #fff;
   width: 100%;
   height: 50px;
@@ -177,7 +177,6 @@ export default function Vagas() {
   const removerVeiculo = () => {
     if (!selectedVaga) return;
 
-    // Confirmação de remoção
     Alert.alert(
       "Remover Veículo",
       "Tem certeza que deseja remover o veículo dessa vaga?",
@@ -191,7 +190,6 @@ export default function Vagas() {
                 ? { ...vaga, placa: "", modelo: "", cor: "" }
                 : vaga
             );
-
             setVagas(novasVagas);
             fecharGaveta();
           },
@@ -258,16 +256,18 @@ export default function Vagas() {
               onChangeText={setCor}
             />
 
+            {/* // selectedVaga != null ? condicao1 : condicao2  */}
+
             <ModalButton onPress={salvarDados}>
               <ModalButtonText>Salvar</ModalButtonText>
             </ModalButton>
 
-            <ModalButtonCancel onPress={fecharGaveta}>
-              <ModalButtonText>Cancelar</ModalButtonText>
-            </ModalButtonCancel>
-
             <ModalButtonCancel onPress={removerVeiculo}>
               <ModalButtonText>Remover Veículo</ModalButtonText>
+            </ModalButtonCancel>
+
+            <ModalButtonCancel onPress={fecharGaveta}>
+              <ModalButtonText>Cancelar</ModalButtonText>
             </ModalButtonCancel>
           </DrawerContent>
         </Animated.View>
