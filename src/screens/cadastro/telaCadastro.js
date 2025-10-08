@@ -2,8 +2,14 @@ import styled from "styled-components";
 import { SafeAreaView, StatusBar } from "react-native";
 import { LoginContainer } from "../login/styles";
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 
 export default function Cadastro() {
+  const[user, setUser] = useState({
+    name: "",
+    email: "",
+    password: ""
+  });
   const navigation = useNavigation();
 
   const ContainerApp = styled.SafeAreaView`
