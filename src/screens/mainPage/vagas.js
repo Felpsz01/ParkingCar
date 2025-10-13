@@ -1,13 +1,8 @@
 import axios from "axios";
 import { useState, useRef } from "react";
-import {
-  StatusBar,
-  TextInput,
-  Animated,
-  Dimensions,
-  Alert,
-} from "react-native";
+import { StatusBar, TextInput, Animated, Dimensions, Alert, View, } from "react-native";
 import styled from "styled-components/native";
+import { Button } from "react-native";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -30,7 +25,7 @@ const LogoImage = styled.Image`
 const VagasTitle = styled.Text`
   color: white;
   font-size: 20px;
-  margin-top: -30px;
+  margin-top: -10px;
   margin-bottom: 10px;
   font-weight: bold;
 `;
@@ -39,7 +34,7 @@ const VagasContainer = styled.ScrollView`
   border: 2px solid #fff;
   width: 80%;
   height: 50%;
-  margin-bottom: 7%;
+  margin-bottom: 9%;
   border-radius: 5px;
 `;
 
@@ -104,36 +99,76 @@ const VagaItemText = styled.Text`
   font-size: 16px;
 `;
 
-function VagaItem({ nome, onPress }) {
+function VagaItem({ numVaga, onPress }) {
   return (
     <VagaItemContainer onPress={onPress}>
-      <VagaItemText>{nome}</VagaItemText>
+      <VagaItemText>{numVaga}</VagaItemText>
     </VagaItemContainer>
   );
 }
 
-export default function Vagas() {
+export default function Vagas({ navigation }) {
   const [vagas, setVagas] = useState([
-    { id: 1, nome: " 01", placa: "", modelo: "", cor: "" },
-    { id: 2, nome: " 02", placa: "", modelo: "", cor: "" },
-    { id: 3, nome: " 03", placa: "", modelo: "", cor: "" },
-    { id: 4, nome: " 04", placa: "", modelo: "", cor: "" },
-    { id: 5, nome: " 05", placa: "", modelo: "", cor: "" },
-    { id: 6, nome: " 06", placa: "", modelo: "", cor: "" },
-    { id: 7, nome: " 07", placa: "", modelo: "", cor: "" },
-    { id: 8, nome: " 08", placa: "", modelo: "", cor: "" },
-    { id: 9, nome: " 09", placa: "", modelo: "", cor: "" },
-    { id: 10, nome: " 10", placa: "", modelo: "", cor: "" },
-    { id: 11, nome: " 11", placa: "", modelo: "", cor: "" },
-    { id: 12, nome: " 12", placa: "", modelo: "", cor: "" },
-    { id: 13, nome: " 13", placa: "", modelo: "", cor: "" },
-    { id: 14, nome: " 14", placa: "", modelo: "", cor: "" },
-    { id: 15, nome: " 15", placa: "", modelo: "", cor: "" },
-    { id: 16, nome: " 16", placa: "", modelo: "", cor: "" },
-    { id: 17, nome: " 17", placa: "", modelo: "", cor: "" },
-    { id: 18, nome: " 18", placa: "", modelo: "", cor: "" },
-    { id: 19, nome: " 19", placa: "", modelo: "", cor: "" },
-    { id: 20, nome: " 20", placa: "", modelo: "", cor: "" },
+    {
+      id: 1,numVaga: " 01",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    {
+      id: 2,numVaga: " 02",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    {
+      id: 3,numVaga: " 03",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    {
+      id: 4,numVaga: " 04",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    {
+      id: 5,numVaga: " 05",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    {
+      id: 6,numVaga: " 06",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    {
+      id: 7,numVaga: " 07",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    {
+      id: 8,numVaga: " 08",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    {
+      id: 9,numVaga: " 09",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    {
+      id: 10,numVaga: " 10",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    { 
+      id: 11,numVaga: " 11",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    { 
+      id: 12,numVaga: " 12",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    {
+      id: 13,numVaga: " 13",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    {
+      id: 14,numVaga: " 14",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    {
+      id: 15,numVaga: " 15",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    {
+      id: 16,numVaga: " 16",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    {
+      id: 17,numVaga: " 17",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    {
+      id: 18,numVaga: " 18",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    {
+      id: 19,numVaga: " 19",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
+    {
+      id: 20,numVaga: " 20",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
+    },
   ]);
 
   const [selectedVaga, setSelectedVaga] = useState(null);
@@ -167,14 +202,26 @@ export default function Vagas() {
   const salvarDados = () => {
     if (!selectedVaga) return;
 
+    const agora = new Date();
+
     const novasVagas = vagas.map((vaga) =>
-      vaga.id === selectedVaga.id ? { ...vaga, placa, modelo, cor } : vaga
+      vaga.id === selectedVaga.id
+        ? {
+            ...vaga,
+            placa,
+            modelo,
+            cor,
+            entrada: vaga.entrada || agora.toISOString(),
+            saida: null,
+            valorPago: null,
+          }
+        : vaga
     );
 
     setVagas(novasVagas);
     fecharGaveta();
   };
-
+  const [historico, setHistorico] = useState([]);
   const removerVeiculo = () => {
     if (!selectedVaga) return;
 
@@ -186,11 +233,38 @@ export default function Vagas() {
         {
           text: "Remover",
           onPress: () => {
-            const novasVagas = vagas.map((vaga) =>
-              vaga.id === selectedVaga.id
-                ? { ...vaga, placa: "", modelo: "", cor: "" }
-                : vaga
-            );
+            const agora = new Date();
+
+            const novasVagas = vagas.map((vaga) => {
+              if (vaga.id === selectedVaga.id) {
+                const entrada = vaga.entrada ? new Date(vaga.entrada) : null;
+                const diffMs = entrada ? agora - entrada : 0;
+                const diffHoras = Math.ceil(diffMs / (1000 * 60 * 60));
+                const valor = diffHoras * 10;
+
+                const registro = {
+                  ...vaga,
+                  saida: agora.toISOString(),
+                  valorPago: valor,
+                };
+
+                // Adiciona ao histórico
+                setHistorico((prevHistorico) => [...prevHistorico, registro]);
+
+                // Retorna vaga "vazia"
+                return {
+                  ...vaga,
+                  placa: "",
+                  modelo: "",
+                  cor: "",
+                  entrada: null,
+                  saida: null,
+                  valorPago: null,
+                };
+              }
+              return vaga;
+            });
+
             setVagas(novasVagas);
             fecharGaveta();
           },
@@ -208,22 +282,27 @@ export default function Vagas() {
           resizeMode="contain"
         />
       </ViewLogoImage>
-
       <VagasTitle>Vagas</VagasTitle>
 
       <VagasContainer>
         {vagas.map((vaga) => (
           <VagaItem
             key={vaga.id}
-            nome={
+            numVaga={
               vaga.placa
-                ? `${vaga.nome} - ${vaga.modelo} (${vaga.cor})`
-                : vaga.nome
+                ? `${vaga.numVaga} - ${vaga.modelo} (${vaga.cor})`
+                : vaga.numVaga
             }
             onPress={() => abrirGaveta(vaga)}
           />
         ))}
       </VagasContainer>
+      <View style={{ marginBottom: 30 }}>
+        <Button
+         title="Ver Histórico"
+         onPress={() => navigation.navigate("Historico")}
+        />
+      </View>
 
       {selectedVaga && (
         <Animated.View
@@ -256,6 +335,29 @@ export default function Vagas() {
               value={cor}
               onChangeText={setCor}
             />
+            {selectedVaga.entrada && (
+              <StyledInput
+                editable={false}
+                value={`Entrada: ${new Date(
+                  selectedVaga.entrada
+                ).toLocaleString()}`}
+              />
+            )}
+
+            {selectedVaga.saida && (
+              <>
+                <StyledInput
+                  editable={false}
+                  value={`Saída: ${new Date(
+                    selectedVaga.saida
+                  ).toLocaleString()}`}
+                />
+                <StyledInput
+                  editable={false}
+                  value={`Valor Pago: R$ ${selectedVaga.valorPago.toFixed(2)}`}
+                />
+              </>
+            )}
 
             {/* // selectedVaga != null ? condicao1 : condicao2  */}
 

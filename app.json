@@ -20,10 +20,16 @@
         "foregroundImage": "",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.lipesilva.ParkingCarapp"
     },
     "web": {
       "favicon": ""
+    },
+    "extra": {
+      "eas": {
+        "projectId": "1d6efefe-f143-4fef-869a-02c1da1d87c9"
+      }
     }
   }
 }

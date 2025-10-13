@@ -3,6 +3,7 @@ import { SafeAreaView, StatusBar } from "react-native";
 import { LoginContainer } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 
+
 const ContainerApp = styled.SafeAreaView`
   flex: 1;
   background-color: #2d2d2d;
