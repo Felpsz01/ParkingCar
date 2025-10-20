@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useRef } from "react";
 import { StatusBar, TextInput, Animated, Dimensions, Alert, View, } from "react-native";
 import styled from "styled-components/native";
+import { useNavigation } from "@react-navigation/native";
 import { Button } from "react-native";
 
 const screenHeight = Dimensions.get("window").height;
@@ -248,10 +249,8 @@ export default function Vagas({ navigation }) {
                   valorPago: valor,
                 };
 
-                // Adiciona ao histórico
                 setHistorico((prevHistorico) => [...prevHistorico, registro]);
 
-                // Retorna vaga "vazia"
                 return {
                   ...vaga,
                   placa: "",
@@ -277,36 +276,25 @@ export default function Vagas({ navigation }) {
     <ContainerApp>
       <StatusBar hidden />
       <ViewLogoImage>
-        <LogoImage
-          source={require("../../assets/images/logo.png")}
-          resizeMode="contain"
-        />
+        <LogoImage source={require("../../assets/images/logo.png")} resizeMode="contain"/>
       </ViewLogoImage>
       <VagasTitle>Vagas</VagasTitle>
 
       <VagasContainer>
         {vagas.map((vaga) => (
           <VagaItem
-            key={vaga.id}
-            numVaga={
-              vaga.placa
-                ? `${vaga.numVaga} - ${vaga.modelo} (${vaga.cor})`
+            key={vaga.id} numVaga={
+              vaga.placa ? `${vaga.numVaga} - ${vaga.modelo} (${vaga.cor})`
                 : vaga.numVaga
-            }
-            onPress={() => abrirGaveta(vaga)}
-          />
+            } onPress={() => abrirGaveta(vaga)}/>
         ))}
       </VagasContainer>
       <View style={{ marginBottom: 30 }}>
-        <Button
-         title="Ver Histórico"
-         onPress={() => navigation.navigate("Historico")}
-        />
+        <Button title="Ver Histórico" onPress={() => navigation.navigate("Historico")}/>
       </View>
 
       {selectedVaga && (
-        <Animated.View
-          style={{
+        <Animated.View style={{
             position: "absolute",
             bottom: 0,
             left: 0,
@@ -317,46 +305,18 @@ export default function Vagas({ navigation }) {
           <DrawerContent>
             <ModalTitle>Editar {selectedVaga.nome}</ModalTitle>
 
-            <StyledInput
-              placeholder="Placa"
-              placeholderTextColor="#aaa"
-              value={placa}
-              onChangeText={setPlaca}
-            />
-            <StyledInput
-              placeholder="Modelo"
-              placeholderTextColor="#aaa"
-              value={modelo}
-              onChangeText={setModelo}
-            />
-            <StyledInput
-              placeholder="Cor"
-              placeholderTextColor="#aaa"
-              value={cor}
-              onChangeText={setCor}
-            />
+            <StyledInput placeholder="Placa" placeholderTextColor="#aaa" value={placa} onChangeText={setPlaca}/>
+            <StyledInput placeholder="Modelo" placeholderTextColor="#aaa" value={modelo} onChangeText={setModelo}/>
+            <StyledInput placeholder="Cor" placeholderTextColor="#aaa" value={cor} onChangeText={setCor}/>
             {selectedVaga.entrada && (
-              <StyledInput
-                editable={false}
-                value={`Entrada: ${new Date(
-                  selectedVaga.entrada
-                ).toLocaleString()}`}
-              />
+              <StyledInput editable={false} value={`Entrada: ${new Date(selectedVaga.entrada).toLocaleString()}`}/>
             )}
 
             {selectedVaga.saida && (
               <>
-                <StyledInput
-                  editable={false}
-                  value={`Saída: ${new Date(
-                    selectedVaga.saida
-                  ).toLocaleString()}`}
-                />
-                <StyledInput
-                  editable={false}
-                  value={`Valor Pago: R$ ${selectedVaga.valorPago.toFixed(2)}`}
-                />
-              </>
+                <StyledInput editable={false} value={`Saída: ${new Date(selectedVaga.saida).toLocaleString()}`}/>
+                <StyledInput editable={false} value={`Valor Pago: R$ ${selectedVaga.valorPago.toFixed(2)}`}/>
+              </> 
             )}
 
             {/* // selectedVaga != null ? condicao1 : condicao2  */}
