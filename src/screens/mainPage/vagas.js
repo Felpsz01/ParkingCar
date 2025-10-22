@@ -108,7 +108,7 @@ function VagaItem({ numVaga, onPress }) {
   );
 }
 
-export default function Vagas({ navigation }) {
+export default function Vagas({ navigator }) {
   const [vagas, setVagas] = useState([
     {
       id: 1,numVaga: " 01",placa: "",modelo: "",cor: "",entrada: null,saida: null,valorPago: null,
@@ -271,7 +271,7 @@ export default function Vagas({ navigation }) {
       ]
     );
   };
-
+  const navigation = useNavigation();
   return (
     <ContainerApp>
       <StatusBar hidden />
@@ -290,7 +290,7 @@ export default function Vagas({ navigation }) {
         ))}
       </VagasContainer>
       <View style={{ marginBottom: 30 }}>
-        <Button title="Ver Histórico" onPress={() => navigation.navigate("Historico")}/>
+        <Button title="Ver Histórico" onPress={() => navigation.navigate("His", {historico})}/>
       </View>
 
       {selectedVaga && (
